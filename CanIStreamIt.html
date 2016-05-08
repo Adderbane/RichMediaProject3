@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <style>
+        div{
+            margin:auto;
+            margin-top:1em;
+            border: solid 1px black;
+            min-height: 200px;
+        }
+        p{
+            margin-left:30%;
+            margin-right: 25%;
+        }
+        #title{
+            font-size: 350%;
+            
+            text-align:center;
+        }
+        #search{
+            width: 35%;
+            margin-left: 30%;
+        }
+        .content{
+            width: 50%;
+            border: solid 1px black;
+        }
+        #thumbnail{
+            margin-left: 30%;
+            float:left;
+        }
+        #movieTitle{
+            float: left;
+            margin-left: 1em;
+            border: solid 1px black;
+
+            
+        }
+        #rating{
+            float:left;
+            margin-left:1em;
+            margin-right:30%;
+            
+        }
+        
+        .sectionHeader{
+            margin-left:30%;
+        }
+        
+        .platformName{
+            margin-left:30%;
+            
+        }
+        .review{
+            border-top: solid 1px black;
+        }
+    </style>
+    <title>Can I Stream It?</title>
+</head>
+<body>
+    <div>
+        <h1 id="title">Can I Stream It?</h1>
+    </div>
+    <div class ="content">
+        <input id="search" type="text" name="movieTitle">
+        <input type="submit" value="Search"><br>
+
+        <img id="thumbnail" src="blank.jpg" style="width:150px;height:150px;margin-top: 1em;" alt="Placeholder">
+         <h2 id ="movieTitle">Movie Title</h2>
+
+         <h2 id="rating">Rating 10/10</h2>
+        
+
+    </div>
+    <div class="content">
+        <h1 class="sectionHeader">Summary</h1>
+        <p> This is a placeholder summary, eventually this will be replaced with the summary of an actual movie. Hopefully it'll be a good one, but
+        that's up to the user. Now I'm just trying to take up as much space as possible so I can actually get a good idea of how this'll look with text
+        in the div.</p>
+    </div>
+    <div class="content">
+        <h1 class="sectionHeader">Platforms</h1>
+        <h2 class="platformName">HBO GO</h2>
+        <h2 class="platformName">Netflix</h2>
+    </div>
+    <div class="content">
+        <h1 class="sectionHeader">Reviews</h1>
+        <p class="review">This is the first review. That movie was great. I had a good experience.</p>
+        <p class="review">This is the second review. That movie was great. I had a good experience.</p>
+        <p class="review">This is the third review. That movie was great. I had a good experience.Bla bla bla bla bla bla bla bla bla bla bla
+        bla bla bla bla bla bla bla.</p>
+    </div>
+</body>
+</html>
