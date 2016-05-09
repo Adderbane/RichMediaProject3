@@ -17,6 +17,7 @@
         var id;
         var reviews;
         var poster;
+        var gbID;
         
         window.onload=init;
         
@@ -85,9 +86,9 @@
                     
                     request2.onreadystatechange = function () {
                         if (this.readyState === 4) {
-                            console.log('Status:', this.status);
-                            console.log('Headers:', this.getAllResponseHeaders());
-                            console.log('Body:', this.responseText);
+                            //console.log('Status:', this.status);
+                            //console.log('Headers:', this.getAllResponseHeaders());
+                            //console.log('Body:', this.responseText);
                             
                             var text2 = this.responseText;
                             var results2 = JSON.parse(text2);
@@ -102,9 +103,27 @@
                             requestGB.onreadystatechange = function () {
                                 if (this.readyState === 4) {
                                     var textGB = this.responseText;
+                                    //console.log(textGB);
                                     var resultsGB = JSON.parse(textGB);
-                                    poster = resultsGB2.poster_120x171;
-                                    console.log(resultsGB);
+                                    gbID = resultsGB.id;
+                                    poster = resultsGB.poster_120x171;
+                                    //console.log(resultsGB);
+                                    debugger;
+                                    var requestGB2 = new XMLHttpRequest();
+                                    requestGB2.open('GET', 'http://api-public.guidebox.com/v1.43/US/' + guideboxKey + '/movie/' + gbID);
+                                    requestGB2.setRequestHeader('Accept', 'application/json');
+                                    requestGB2.onreadystatechange = function(){
+                                        if (this.readyState === 4) {
+                                            var textGB2 = this.responseText;
+                                            var resultsGB2 = JSON.parse(textGB2);
+                                            console.log(resultsGB2);
+                                            
+                                        }
+                                    }
+                                    
+                                    requestGB2.send();
+                                    
+                                    
 
                                     //Generate
                                     generatePage();
