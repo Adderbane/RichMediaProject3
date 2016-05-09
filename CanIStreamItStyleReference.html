@@ -20,31 +20,7 @@
         window.onload=init;
         
         function generatePage(){
-            var bigString = "<div class ='content'>";
-            bigString += "<img id='thumbnail' src='blank.jpg' style='width:150px;height:150px;margin-top: 1em;' alt='Placeholder'>";
-            bigString +="<h2 id ='movieTitle'>" + movieTitle + "</h2>";
-            bigString +=" <h2 id='rating'>" + rating +  "/10</h2>";
-            bigString += "</div>";
-            bigString += "<div class ='content'>";
-            bigString +="<h1 class='sectionHeader'>Summary</h1>";
-            bigString +="<p>" + summary + "</p>";
-            bigString += "</div>";
-            bigString += "<div class ='content'>";
-            bigString += "<h1 class='sectionHeader'>Platforms</h1><h2 class='platformName'>HBO GO</h2><h2 class='platformName'>Netflix</h2>"
-            bigString += "</div>";
-            bigString += "<div class ='content'>";
-            bigString += "<h1 class='sectionHeader'>Reviews</h1>"
             
-            for(var i =0; i < reviews.length; i++)
-            {
-                bigString += "<p class='review'>" + reviews[i].content + "</p>";
-            }
-            
-           
-            
-            bigString += "</div>";
-            
-            document.querySelector('#dynamicContent').innerHTML = bigString;
         }
         
         function init(){
@@ -95,8 +71,7 @@
                         console.log('Body:', this.responseText);
                         
                         var text2 = this.responseText;
-                        var results2 = JSON.parse(text2);
-                        reviews = results2.results;
+                        reviews = JSON.parse(text2);
                         generatePage();
                         
                         }
@@ -128,7 +103,7 @@
             margin:auto;
             margin-top:1em;
             border: solid 1px black;
-            
+            min-height: 200px;
         }
         p{
             margin-left:30%;
@@ -143,13 +118,9 @@
             width: 35%;
             margin-left: 30%;
         }
-        #searchDiv{
-            width: 50%;
-        }
         .content{
             width: 50%;
             border: solid 1px black;
-            min-height: 200px;
         }
         #thumbnail{
             margin-left: 30%;
@@ -187,12 +158,34 @@
     <div>
         <h1 id="title">Can I Stream It?</h1>
     </div>
-    <div id ="searchDiv">
+    <div class ="content">
         <input id="search" type="text" name="movieTitle" value="Enter Movie Title">
         <button type="button" id="searchButton">Search</button><br>
-    </div>
-    <div id="dynamicContent">
 
+        <img id="thumbnail" src="blank.jpg" style="width:150px;height:150px;margin-top: 1em;" alt="Placeholder">
+         <h2 id ="movieTitle">Movie Title</h2>
+
+         <h2 id="rating">Rating 10/10</h2>
+        
+
+    </div>
+    <div class="content">
+        <h1 class="sectionHeader">Summary</h1>
+        <p> This is a placeholder summary, eventually this will be replaced with the summary of an actual movie. Hopefully it'll be a good one, but
+        that's up to the user. Now I'm just trying to take up as much space as possible so I can actually get a good idea of how this'll look with text
+        in the div.</p>
+    </div>
+    <div class="content">
+        <h1 class="sectionHeader">Platforms</h1>
+        <h2 class="platformName">HBO GO</h2>
+        <h2 class="platformName">Netflix</h2>
+    </div>
+    <div class="content">
+        <h1 class="sectionHeader">Reviews</h1>
+        <p class="review">This is the first review. That movie was great. I had a good experience.</p>
+        <p class="review">This is the second review. That movie was great. I had a good experience.</p>
+        <p class="review">This is the third review. That movie was great. I had a good experience.Bla bla bla bla bla bla bla bla bla bla bla
+        bla bla bla bla bla bla bla.</p>
     </div>
 </body>
 </html>
