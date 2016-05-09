@@ -18,6 +18,7 @@
         var reviews;
         var poster;
         var gbID;
+		var gbdata;
         
         window.onload=init;
         
@@ -32,8 +33,18 @@
             bigString +="<p>" + summary + "</p>";
             bigString += "</div>";
             bigString += "<div class ='content'>";
-            bigString += "<h1 class='sectionHeader'>Platforms</h1><h2 class='platformName'>HBO GO</h2><h2 class='platformName'>Netflix</h2>"
-            bigString += "</div>";
+            bigString += "<h1 class='sectionHeader'>Platforms</h1><ul>";
+			
+			//List platforms
+			if(gbdata.length != 0)
+			{
+				for(var i =0; i < gbdata.length; i++)
+				{
+                bigString += "<li><a class='platformName' href='" + gbdata[i].link + "'>" + gbdata[i].display_name + "</a></li>";
+				}
+			}
+			
+            bigString += "</ul></div>";
             bigString += "<div class ='content'>";
             bigString += "<h1 class='sectionHeader'>Reviews</h1>"
             
@@ -68,7 +79,7 @@
                     //console.log('Headers:', this.getAllResponseHeaders());
                     //console.log('Body:', this.responseText);
                     var text = this.responseText;
-                    debugger;
+                    //debugger;
                     var results = JSON.parse(text);
                     var result = results.results[0];
                     
@@ -108,7 +119,7 @@
                                     gbID = resultsGB.id;
                                     poster = resultsGB.poster_120x171;
                                     //console.log(resultsGB);
-                                    debugger;
+                                    //debugger;
                                     var requestGB2 = new XMLHttpRequest();
                                     requestGB2.open('GET', 'http://api-public.guidebox.com/v1.43/US/' + guideboxKey + '/movie/' + gbID);
                                     requestGB2.setRequestHeader('Accept', 'application/json');
@@ -117,16 +128,14 @@
                                             var textGB2 = this.responseText;
                                             var resultsGB2 = JSON.parse(textGB2);
                                             console.log(resultsGB2);
-                                            
+											//debugger;
+                                            gbdata = resultsGB2.purchase_web_sources;
+											//Generate
+											generatePage();
                                         }
                                     }
                                     
                                     requestGB2.send();
-                                    
-                                    
-
-                                    //Generate
-                                    generatePage();
                                 }
                             }
 
@@ -198,7 +207,8 @@
         }
         
         .platformName{
-            margin-left:30%;
+            margin-left:20%;
+			
             
         }
         .review{
