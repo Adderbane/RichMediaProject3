@@ -69,7 +69,7 @@
             //console.log(searchTerm);
             
             var request = new XMLHttpRequest();
-            request.open('GET', 'http://api.themoviedb.org/3/search/movie?api_key=' + dbKey + '&query=' + searchTerm);
+            request.open('GET', 'https://api.themoviedb.org/3/search/movie?api_key=' + dbKey + '&query=' + searchTerm);
             
             request.setRequestHeader('Accept', 'application/json');
 
@@ -91,7 +91,7 @@
                     
                     var request2 = new XMLHttpRequest();
 
-                    request2.open('GET', 'http://api.themoviedb.org/3/movie/'+ id + '/reviews?api_key=' + dbKey);
+                    request2.open('GET', 'https://api.themoviedb.org/3/movie/'+ id + '/reviews?api_key=' + dbKey);
         
                     request2.setRequestHeader('Accept', 'application/json');
                     
@@ -107,7 +107,7 @@
                             
                             //Get Guidebox data
                             var requestGB = new XMLHttpRequest();
-                            requestGB.open('GET', 'http://api-public.guidebox.com/v1.43/US/' + guideboxKey + '/search/movie/id/themoviedb/' + id);
+                            requestGB.open('GET', 'https://api-public.guidebox.com/v1.43/US/' + guideboxKey + '/search/movie/id/themoviedb/' + id);
 
                             requestGB.setRequestHeader('Accept', 'application/json');
 
@@ -121,7 +121,7 @@
                                     //console.log(resultsGB);
                                     //debugger;
                                     var requestGB2 = new XMLHttpRequest();
-                                    requestGB2.open('GET', 'http://api-public.guidebox.com/v1.43/US/' + guideboxKey + '/movie/' + gbID);
+                                    requestGB2.open('GET', 'https://api-public.guidebox.com/v1.43/US/' + guideboxKey + '/movie/' + gbID);
                                     requestGB2.setRequestHeader('Accept', 'application/json');
                                     requestGB2.onreadystatechange = function(){
                                         if (this.readyState === 4) {
