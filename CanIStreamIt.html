@@ -23,8 +23,8 @@
         window.onload=init;
         
         function generatePage(){
-            var bigString = "<div class ='content'>";
-            bigString += "<img id='thumbnail' src='" + poster + "' style='width:120px;height:171px;margin-top: 1em;' alt='Placeholder'>";
+            var bigString = "<div class ='content' id='mainDiv'>";
+            bigString += "<img id='thumbnail' src='" + poster + "' alt='Placeholder' />";
             bigString +="<h2 id ='movieTitle'>" + movieTitle + "</h2>";
             bigString +=" <h2 id='rating'>" + rating +  "/10</h2>";
             bigString += "</div>";
