@@ -1,103 +1,7 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <script>
-        "use strict"
-        //movieDB API key
-        var dbKey = "f86edba420c3813b9682269de22acab3";
-        
-        //Guidebox Development API key, has limited number of calls until we get a production key
-        //so be careful with how many tests you run with it
-        var guideboxKey = "GEs7o6lmYEQk8GVBPws0D3wHhNNB7h"
-        var searchTerm;
-        var rating;
-        var movieTitle;
-        var summary;
-        var id;
-        var reviews;
-        
-        window.onload=init;
-        
-        function generatePage(){
-            
-        }
-        
-        function init(){
-        document.querySelector("#searchButton").onclick = getData;
-        }
-        
-        function getData(){
-            searchTerm = document.querySelector("#search").value;
-            //console.log(searchTerm);
-            
-            var request = new XMLHttpRequest();
-            request.open('GET', 'http://api.themoviedb.org/3/search/movie?api_key=' + dbKey + '&query=' + searchTerm);
-            
-            request.setRequestHeader('Accept', 'application/json');
-            
-              
-             
-            
-
-            request.onreadystatechange = function(){
-                if (this.readyState === 4) {
-                    //console.log('Status:', this.status);
-                    //console.log('Headers:', this.getAllResponseHeaders());
-                    //console.log('Body:', this.responseText);
-                    var text = this.responseText;
-                    debugger;
-                    var results = JSON.parse(text);
-                    var result = results.results[0];
-                    
-                    rating = result.vote_average;
-                    summary = result.overview;
-                    movieTitle = result.original_title;
-                    id = result.id;
-                    //console.log(id);
-                    
-                    var request2 = new XMLHttpRequest();
-
-                    request2.open('GET', 'http://api.themoviedb.org/3/movie/'+ id + '/reviews?api_key=' + dbKey);
-        
-                    request2.setRequestHeader('Accept', 'application/json');
-                    
-                   
-        
-                    request2.onreadystatechange = function () {
-                        if (this.readyState === 4) {
-                        console.log('Status:', this.status);
-                        console.log('Headers:', this.getAllResponseHeaders());
-                        console.log('Body:', this.responseText);
-                        
-                        var text2 = this.responseText;
-                        reviews = JSON.parse(text2);
-                        generatePage();
-                        
-                        }
-                    };
-        
-                    request2.send();
-                    
-                }
-            };
-            
-            request.send();
-            
-            
-            
-            
-            
-            
-            
-            
-            //var firstResult = results[1];
-           // console.log(result.id);
-            
-            
-            
-        }
-    </script>
 	<link rel="stylesheet" type="text/css" href="style.css">
     <title>Can I Stream It?</title>
 </head>
@@ -105,43 +9,46 @@
     <div>
         <h1 id="title">Can I Stream It?</h1>
     </div>
-    <div class ="content" id="mainDiv">
+    <div id="searchDiv">
         <input id="search" type="text" name="movieTitle" value="Enter Movie Title">
         <button type="button" id="searchButton">Search</button><br>
-
-        <img id="thumbnail" src="blank.jpg" alt="Placeholder" />
-         <h2 id ="movieTitle">Movie Title</h2>
-
-         <h2 id="rating">Rating 10/10</h2>
-        
-
     </div>
-    <div class="content">
-        <h1 class="sectionHeader">Summary</h1>
-        <p> This is a placeholder summary, eventually this will be replaced with the summary of an actual movie. Hopefully it'll be a good one, but
-        that's up to the user. Now I'm just trying to take up as much space as possible so I can actually get a good idea of how this'll look with text
-        in the div.</p>
-    </div>
-    <div class="content">
-		<h1 class="sectionHeader">Platforms</h1>
-		<ul>
-			<li><a class="platformName" href="https://itunes.apple.com/us/movie/the-martian/id1039586890?uo=4&amp;at=10laHb">iTunes</a></li>
-			<li><a class="platformName" href="http://www.amazon.com/gp/product/B018HIZIVW">Amazon</a></li>
-			<li><a class="platformName" href="http://click.linksynergy.com/fs-bin/click?id=Pz66xbzAbFo&amp;subid=&amp;offerid=251672.1&amp;type=10&amp;tmpid=9417&amp;RD_PARM1=http%3A%2F%2Fwww.vudu.com%2Fmovies%2F%23%21content%2F704656%2FThe-Martian">VUDU</a></li>
-			<li><a class="platformName" href="https://play.google.com/store/movies/details?id=TeZDLAaDYos">Google Play</a></li>
-			<li><a class="platformName" href="https://www.mgo.com/details/MMV5197172A3ABB92E1A669A1BD19763DAA5">FandangoNOW</a></li>
-			<li><a class="platformName" href="http://www.cinemanow.com/title/658458">CinemaNow</a></li>
-			<li><a class="platformName" href="https://www.youtube.com/watch?v=TeZDLAaDYos">YouTube</a></li>
-			<li><a class="platformName" href="https://video.xbox.com/movie/c9973a09-0100-11db-89ca-0019b92a3933">Xbox</a></li>
-			<li><a class="platformName" href="https://store.sonyentertainmentnetwork.com/#!/en-us/movies/cid=UV0010-NPVB17898_CN-0000000000294701">Sony Entertainment Network</a></li>
-		</ul>
-	</div>
-    <div class="content">
-        <h1 class="sectionHeader">Reviews</h1>
-        <p class="review">This is the first review. That movie was great. I had a good experience.</p>
-        <p class="review">This is the second review. That movie was great. I had a good experience.</p>
-        <p class="review">This is the third review. That movie was great. I had a good experience.Bla bla bla bla bla bla bla bla bla bla bla
-        bla bla bla bla bla bla bla.</p>
+    <div id="dynamicContent">
+        <div class="content" id="mainDiv">
+            <img id="thumbnail" src="http://static-api.guidebox.com/thumbnails_movies_small/28710-1110551069-9022132004-2065281882-small-120x171.jpg" alt="Placeholder">
+            <h2 id="movieTitle">The Avengers</h2>
+            <h2 id="rating">7.31/10</h2>
+        </div>
+        <div class="content">
+            <h1 class="sectionHeader">Summary</h1>
+            <p>
+               When an unexpected enemy emerges and threatens global safety and security, Nick Fury, director of the international peacekeeping agency known as S.H.I.E.L.D.,
+               finds himself in need of a team to pull the world back from the brink of disaster. Spanning the globe, a daring recruitment effort begins!
+            </p>
+        </div>
+        <div class="content">
+            <h1 class="sectionHeader">Platforms</h1>
+            <h2>Purchase</h2>
+            <ul>
+                <li><a class="platformName" href="https://itunes.apple.com/us/movie/the-avengers/id533654020?uo=4&amp;at=10laHb">iTunes</a></li>
+                <li><a class="platformName" href="http://www.amazon.com/gp/product/B0099RFVXQ">Amazon</a></li>
+                <li><a class="platformName" href="http://click.linksynergy.com/fs-bin/click?id=Pz66xbzAbFo&amp;subid=&amp;offerid=251672.1&amp;type=10&amp;tmpid=9417&amp;RD_PARM1=http%3A%2F%2Fwww.vudu.com%2Fmovies%2F%23%21content%2F249993%2FMarvels-The-Avengers">VUDU</a></li>
+                <li><a class="platformName" href="https://play.google.com/store/movies/details/Marvel_s_The_Avengers?id=W9ZnpIGvZUo">Google Play</a></li>
+                <li><a class="platformName" href="http://www.cinemanow.com/title/463543">CinemaNow</a></li>
+                <li><a class="platformName" href="http://www.youtube.com/watch?v=W9ZnpIGvZUo">YouTube</a></li>
+                <li><a class="platformName" href="https://store.sonyentertainmentnetwork.com/#!/en-us/movies/cid=UV0008-NPVA59918_CN-0000000000150237">Sony Entertainment Network</a></li>
+                <li><a class="platformName" href="http://www.disneymoviesanywhere.com/movie/avengers">Disney Movies Anywhere</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h1 class="sectionHeader">Reviews</h1><p class="review">
+                With a movie like this you wonder how all of the otherwise, main characters will work together and support the story.
+
+                No problems here.  While as might be expected, R. Downey Jr. comes across largely central, it is still a good mix and IMHO the best scenes in the movie involve the generated Hulk character.
+
+                With that kind of successful melding of characters, Hollywood-scale egos and even computer generated characters; you have to give it up to the writers and director to make this the successful film that it is.
+            </p>
+        </div>
     </div>
 </body>
 </html>

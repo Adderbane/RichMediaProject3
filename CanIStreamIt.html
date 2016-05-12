@@ -33,27 +33,52 @@
             bigString +="<p>" + summary + "</p>";
             bigString += "</div>";
             bigString += "<div class ='content'>";
-            bigString += "<h1 class='sectionHeader'>Platforms</h1><ul>";
+            bigString += "<h1 class='sectionHeader'>Platforms</h1>";
 			
 			//List platforms
-			if(gbdata.length != 0)
+			if(gbdata.purchase_web_sources.length != 0)
 			{
-				for(var i =0; i < gbdata.length; i++)
+			    bigString += "<h2>Purchase</h2><ul>";
+			    for (var i = 0; i < gbdata.purchase_web_sources.length; i++)
 				{
-                bigString += "<li><a class='platformName' href='" + gbdata[i].link + "'>" + gbdata[i].display_name + "</a></li>";
-				}
+			        bigString += "<li><a class='platformName' href='" + gbdata.purchase_web_sources[i].link + "'>" + gbdata.purchase_web_sources[i].display_name + "</a></li>";
+			    }
+			    bigString += "</ul>";
+			}
+			if (gbdata.free_web_sources.length != 0)
+			{
+			    bigString += "<h2>Free</h2><ul>";
+			    for (var i = 0; i < gbdata.free_web_sources.length; i++)
+			    {
+			        bigString += "<li><a class='platformName' href='" + gbdata.free_web_sources[i].link + "'>" + gbdata.free_web_sources[i].display_name + "</a></li>";
+			    }
+			    bigString += "</ul>";
+			}
+			if (gbdata.tv_everywhere_web_sources.length != 0)
+			{
+			    bigString += "<h2>TV Everywhere</h2><ul>";
+			    for (var i = 0; i < gbdata.tv_everywhere_web_sources.length; i++)
+			    {
+			        bigString += "<li><a class='platformName' href='" + gbdata.tv_everywhere_web_sources[i].link + "'>" + gbdata.tv_everywhere_web_sources[i].display_name + "</a></li>";
+			    }
+			    bigString += "</ul>";
+			}
+			if (gbdata.subscription_web_sources.length != 0) {
+			    bigString += "<h2>Subscription Services</h2><ul>";
+			    for (var i = 0; i < gbdata.subscription_web_sources.length; i++) {
+			        bigString += "<li><a class='platformName' href='" + gbdata.subscription_web_sources[i].link + "'>" + gbdata.subscription_web_sources[i].display_name + "</a></li>";
+			    }
+			    bigString += "</ul>";
 			}
 			
-            bigString += "</ul></div>";
+            bigString += "</div>";
             bigString += "<div class ='content'>";
             bigString += "<h1 class='sectionHeader'>Reviews</h1>"
-            
+
             for(var i =0; i < reviews.length; i++)
             {
                 bigString += "<p class='review'>" + reviews[i].content + "</p>";
             }
-            
-           
             
             bigString += "</div>";
             
@@ -129,7 +154,7 @@
                                             var resultsGB2 = JSON.parse(textGB2);
                                             console.log(resultsGB2);
 											//debugger;
-                                            gbdata = resultsGB2.purchase_web_sources;
+                                            gbdata = resultsGB2;
 											//Generate
 											generatePage();
                                         }

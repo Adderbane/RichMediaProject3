@@ -79,6 +79,10 @@ ul{
 	list-style-type: none;
 }
 
+h2{
+	margin-left: 30%;
+}
+
 .sectionHeader{
 	text-align: center;
 	padding: .2em;
