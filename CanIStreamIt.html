@@ -87,6 +87,12 @@
         
         function init(){
             document.querySelector("#searchButton").onclick = getData;
+
+            //Check storage
+            if (localStorage.getItem('last') != null) {
+                document.querySelector('#search').value = localStorage.getItem('last');
+                getData();
+            }
         }
         
         function getData(){
@@ -156,7 +162,10 @@
 											//debugger;
                                             gbdata = resultsGB2;
 											//Generate
-											generatePage();
+                                            generatePage();
+
+                                            //Store
+                                            localStorage.setItem('last', searchTerm);
                                         }
                                     }
                                     
