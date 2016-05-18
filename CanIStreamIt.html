@@ -36,6 +36,7 @@
             bigString += "<h1 class='sectionHeader'>Platforms</h1>";
 			
 			//List platforms
+			debugger;
 			if(gbdata.purchase_web_sources.length != 0)
 			{
 			    bigString += "<h2>Purchase</h2><ul>";
@@ -72,15 +73,21 @@
 			}
 			
             bigString += "</div>";
-            bigString += "<div class ='content'>";
-            bigString += "<h1 class='sectionHeader'>Reviews</h1>"
-
-            for(var i =0; i < reviews.length; i++)
-            {
-                bigString += "<p class='review'>" + reviews[i].content + "</p>";
-            }
             
-            bigString += "</div>";
+			
+			if (reviews.length != 0) {
+				bigString += "<div class ='content'>";
+					
+				
+				bigString += "<h1 class='sectionHeader'>Reviews</h1>"
+	
+				for(var i =0; i < reviews.length; i++)
+				{
+					bigString += "<p class='review'>" + reviews[i].content + "</p>";
+				}
+				
+				bigString += "</div>";
+			}
             
             document.querySelector('#dynamicContent').innerHTML = bigString;
         }
