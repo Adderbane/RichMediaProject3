@@ -12,6 +12,7 @@ div{
     margin:auto;
     margin-bottom:1em;
 	border-radius: 15px;
+	font-family: 'Fjalla One', sans-serif;
 }
 
 p{
@@ -29,7 +30,7 @@ p{
 	padding: .2em;
     font-size: 350%;
     text-align:center;
-	font-family: "Movie Filmstrip", sans-serif;
+	font-family: 'movie_filmstripregular', sans-serif;
 	background: #39353D;
 }
 #search{
