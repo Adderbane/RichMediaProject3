@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <script>
+	(function()
+	{
         "use strict"
         //movieDB API key
         var dbKey = "f86edba420c3813b9682269de22acab3";
@@ -22,6 +24,7 @@
         
         window.onload=init;
         
+		//Write data to html
         function generatePage(){
             var bigString = "<div class ='content' id='mainDiv'>";
             bigString += "<img id='thumbnail' src='" + poster + "' alt='Placeholder' />";
@@ -36,7 +39,6 @@
             bigString += "<h1 class='sectionHeader'>Platforms</h1>";
 			
 			//List platforms
-			debugger;
 			if(gbdata.purchase_web_sources.length != 0)
 			{
 			    bigString += "<h2>Purchase</h2><ul>";
@@ -74,7 +76,7 @@
 			
             bigString += "</div>";
             
-			
+			//List review
 			if (reviews.length != 0) {
 				bigString += "<div class ='content'>";
 					
@@ -93,6 +95,7 @@
         }
         
         function init(){
+			//Button hookup
             document.querySelector("#searchButton").onclick = getData;
 
             //Check storage
@@ -103,9 +106,10 @@
         }
         
         function getData(){
+			//Get input
             searchTerm = document.querySelector("#search").value;
-            //console.log(searchTerm);
             
+			//Get TMDb ID
             var request = new XMLHttpRequest();
             request.open('GET', 'https://api.themoviedb.org/3/search/movie?api_key=' + dbKey + '&query=' + searchTerm);
             
@@ -113,11 +117,7 @@
 
             request.onreadystatechange = function(){
                 if (this.readyState === 4) {
-                    //console.log('Status:', this.status);
-                    //console.log('Headers:', this.getAllResponseHeaders());
-                    //console.log('Body:', this.responseText);
                     var text = this.responseText;
-                    //debugger;
                     var results = JSON.parse(text);
                     var result = results.results[0];
                     
@@ -125,8 +125,8 @@
                     summary = result.overview;
                     movieTitle = result.original_title;
                     id = result.id;
-                    //console.log(id);
                     
+					//Get full TMDb data
                     var request2 = new XMLHttpRequest();
 
                     request2.open('GET', 'https://api.themoviedb.org/3/movie/'+ id + '/reviews?api_key=' + dbKey);
@@ -135,15 +135,12 @@
                     
                     request2.onreadystatechange = function () {
                         if (this.readyState === 4) {
-                            //console.log('Status:', this.status);
-                            //console.log('Headers:', this.getAllResponseHeaders());
-                            //console.log('Body:', this.responseText);
-                            
+						
                             var text2 = this.responseText;
                             var results2 = JSON.parse(text2);
                             reviews = results2.results;
                             
-                            //Get Guidebox data
+                            //Get Guidebox ID
                             var requestGB = new XMLHttpRequest();
                             requestGB.open('GET', 'https://api-public.guidebox.com/v1.43/US/' + guideboxKey + '/search/movie/id/themoviedb/' + id);
 
@@ -152,12 +149,11 @@
                             requestGB.onreadystatechange = function () {
                                 if (this.readyState === 4) {
                                     var textGB = this.responseText;
-                                    //console.log(textGB);
                                     var resultsGB = JSON.parse(textGB);
                                     gbID = resultsGB.id;
                                     poster = resultsGB.poster_120x171;
-                                    //console.log(resultsGB);
-                                    //debugger;
+									
+									//Get full Guidebox data
                                     var requestGB2 = new XMLHttpRequest();
                                     requestGB2.open('GET', 'https://api-public.guidebox.com/v1.43/US/' + guideboxKey + '/movie/' + gbID);
                                     requestGB2.setRequestHeader('Accept', 'application/json');
@@ -166,8 +162,8 @@
                                             var textGB2 = this.responseText;
                                             var resultsGB2 = JSON.parse(textGB2);
                                             console.log(resultsGB2);
-											//debugger;
                                             gbdata = resultsGB2;
+											
 											//Generate
                                             generatePage();
 
@@ -192,14 +188,13 @@
             };
             
             request.send();
-            
-            //var firstResult = results[1];
-            // console.log(result.id);
         }
+	})();
     </script>
     <link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" type="text/css" href="font/fontStyle.css">
-    <title>Can I Stream It?</title>
+    <link href='https://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+	<title>Can I Stream It?</title>
 </head>
 <body>
     <div>
