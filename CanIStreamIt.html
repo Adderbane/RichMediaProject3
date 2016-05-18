@@ -90,6 +90,7 @@
 			}
             
             document.querySelector('#dynamicContent').innerHTML = bigString;
+			endLoadAnim();
         }
         
         function init(){
@@ -101,8 +102,20 @@
                 getData();
             }
         }
+		
+		function runLoadAnim(){
+			var element = document.getElementById("load");
+			element.style.visibility = "visible";
+		}
+		
+		function endLoadAnim(){
+			var element = document.getElementById("load");
+			element.style.visibility = "hidden";
+		}
         
         function getData(){
+			debugger;
+			runLoadAnim();
             searchTerm = document.querySelector("#search").value;
             //console.log(searchTerm);
             
@@ -119,75 +132,84 @@
                     var text = this.responseText;
                     //debugger;
                     var results = JSON.parse(text);
-                    var result = results.results[0];
+					debugger;
+					
+					
+						var result = results.results[0];
+						if (result != undefined) {
+						rating = result.vote_average;
+						summary = result.overview;
+						movieTitle = result.original_title;
+						id = result.id;
+						//console.log(id);
+						
+						var request2 = new XMLHttpRequest();
+	
+						request2.open('GET', 'https://api.themoviedb.org/3/movie/'+ id + '/reviews?api_key=' + dbKey);
+			
+						request2.setRequestHeader('Accept', 'application/json');
+						
+						request2.onreadystatechange = function () {
+							if (this.readyState === 4) {
+								//console.log('Status:', this.status);
+								//console.log('Headers:', this.getAllResponseHeaders());
+								//console.log('Body:', this.responseText);
+								
+								var text2 = this.responseText;
+								var results2 = JSON.parse(text2);
+								reviews = results2.results;
+								
+								//Get Guidebox data
+								var requestGB = new XMLHttpRequest();
+								requestGB.open('GET', 'https://api-public.guidebox.com/v1.43/US/' + guideboxKey + '/search/movie/id/themoviedb/' + id);
+	
+								requestGB.setRequestHeader('Accept', 'application/json');
+	
+								requestGB.onreadystatechange = function () {
+									if (this.readyState === 4) {
+										var textGB = this.responseText;
+										//console.log(textGB);
+										var resultsGB = JSON.parse(textGB);
+										gbID = resultsGB.id;
+										poster = resultsGB.poster_120x171;
+										//console.log(resultsGB);
+										//debugger;
+										var requestGB2 = new XMLHttpRequest();
+										requestGB2.open('GET', 'https://api-public.guidebox.com/v1.43/US/' + guideboxKey + '/movie/' + gbID);
+										requestGB2.setRequestHeader('Accept', 'application/json');
+										requestGB2.onreadystatechange = function(){
+											if (this.readyState === 4) {
+												var textGB2 = this.responseText;
+												var resultsGB2 = JSON.parse(textGB2);
+												console.log(resultsGB2);
+												//debugger;
+												gbdata = resultsGB2;
+												//Generate
+												generatePage();
+	
+												//Store
+												localStorage.setItem('last', searchTerm);
+											}
+										}
+										
+										requestGB2.send();
+									}
+								}
+	
+								requestGB.send();
+	
+							
+							}
+						};
+			
+						request2.send();
                     
-                    rating = result.vote_average;
-                    summary = result.overview;
-                    movieTitle = result.original_title;
-                    id = result.id;
-                    //console.log(id);
-                    
-                    var request2 = new XMLHttpRequest();
-
-                    request2.open('GET', 'https://api.themoviedb.org/3/movie/'+ id + '/reviews?api_key=' + dbKey);
-        
-                    request2.setRequestHeader('Accept', 'application/json');
-                    
-                    request2.onreadystatechange = function () {
-                        if (this.readyState === 4) {
-                            //console.log('Status:', this.status);
-                            //console.log('Headers:', this.getAllResponseHeaders());
-                            //console.log('Body:', this.responseText);
-                            
-                            var text2 = this.responseText;
-                            var results2 = JSON.parse(text2);
-                            reviews = results2.results;
-                            
-                            //Get Guidebox data
-                            var requestGB = new XMLHttpRequest();
-                            requestGB.open('GET', 'https://api-public.guidebox.com/v1.43/US/' + guideboxKey + '/search/movie/id/themoviedb/' + id);
-
-                            requestGB.setRequestHeader('Accept', 'application/json');
-
-                            requestGB.onreadystatechange = function () {
-                                if (this.readyState === 4) {
-                                    var textGB = this.responseText;
-                                    //console.log(textGB);
-                                    var resultsGB = JSON.parse(textGB);
-                                    gbID = resultsGB.id;
-                                    poster = resultsGB.poster_120x171;
-                                    //console.log(resultsGB);
-                                    //debugger;
-                                    var requestGB2 = new XMLHttpRequest();
-                                    requestGB2.open('GET', 'https://api-public.guidebox.com/v1.43/US/' + guideboxKey + '/movie/' + gbID);
-                                    requestGB2.setRequestHeader('Accept', 'application/json');
-                                    requestGB2.onreadystatechange = function(){
-                                        if (this.readyState === 4) {
-                                            var textGB2 = this.responseText;
-                                            var resultsGB2 = JSON.parse(textGB2);
-                                            console.log(resultsGB2);
-											//debugger;
-                                            gbdata = resultsGB2;
-											//Generate
-                                            generatePage();
-
-                                            //Store
-                                            localStorage.setItem('last', searchTerm);
-                                        }
-                                    }
-                                    
-                                    requestGB2.send();
-                                }
-                            }
-
-                            requestGB.send();
-
-                        
-                        }
-                    };
-        
-                    request2.send();
-                    
+					}
+					else{
+						var element = document.getElementById("search");
+						element.value = "No movie with that title found.";
+						endLoadAnim();
+					}
                 }
             };
             
@@ -198,7 +220,8 @@
         }
     </script>
     <link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="stylesheet" type="text/css" href="fontStyle.css">
+	<link rel="stylesheet" type="text/css" href="font/fontStyle.css">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
     <title>Can I Stream It?</title>
 </head>
 <body>
@@ -212,5 +235,10 @@
     <div id="dynamicContent">
 
     </div>
+	<div id="load">
+		<div id = "loadSymbol">
+			<i class = "fa fa-circle-o-notch fa-spin" style="font-size: 48px; color:white;"></i>
+		</div>
+	</div>
 </body>
 </html>
