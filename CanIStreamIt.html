@@ -105,12 +105,15 @@
                 getData();
             }
         }
-		
+		//makes load div visible
+		//displays spinning loading symbol found on font awesome, and darkens other content
+		//http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css
 		function runLoadAnim(){
 			var element = document.getElementById("load");
 			element.style.visibility = "visible";
 		}
 		
+		//hides load div
 		function endLoadAnim(){
 			var element = document.getElementById("load");
 			element.style.visibility = "hidden";
